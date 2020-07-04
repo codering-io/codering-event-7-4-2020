@@ -13,7 +13,7 @@ app.use("/posts", postsRouter)
 app.use("/friends", friendsRouter)
 
 
-mongoose.connect("mongodb//localhost:27017/coderingevent1", {
+mongoose.connect("mongodb+srv://localhost:27017/coderingevent1", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
