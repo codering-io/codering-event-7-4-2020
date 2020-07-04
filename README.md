@@ -10,7 +10,16 @@
 
 # Instructions
 
-There are a total of 14 tasks. You are only allowed to submit *one* task ***per*** pull request. You may submit a new Pull Request once yours is closed or merged. For example, you cannot submit 1 Pull Request with both tasks 1) and 2) together.
+- There are a total of 16 tasks. You are only allowed to submit *one* task ***per*** pull request. You may submit a new Pull Request once yours is closed or merged. For example, you cannot submit 1 Pull Request with both tasks 1) and 2) together.
+
+- Do not install any additional modules, the only npm packages needed are already listed in the package.json
+
+- Fork this repository, and then clone your own fork either with HTTP or SSH
+
+- Run `npm i`
+
+- Run `npm run start` to start the app, or if you have nodemon, `npm run dev`. This will start up the express app on Port 3001.
+
 
 # How to contribute
 
@@ -23,6 +32,7 @@ You must fork this repository, and then clone it and then make changes on your o
   - **/posts**
   - **/friends**
 
+
 # Explanation:
 
 ### Each route must have all CRUD operations, Create (POST), Read (GET), Update (PUT), Delete (DELETE).
@@ -30,6 +40,30 @@ You must fork this repository, and then clone it and then make changes on your o
 **Route /users**
 
 **Description:**
+
+Database Models:
+
+**1 - Create a Database Model for Users**
+
+```
+{
+  username: string
+  password: string
+  email: string
+}
+```
+
+**2 - Create a Database Model for Posts**
+```
+{
+  title: string
+  content: string
+  author: string (username)
+  createdOn: Date
+  editedOn: Date
+}
+```
+
 This route is for all users that are signed up with the application, every user must be unique.
 
 **1 - GET /users**

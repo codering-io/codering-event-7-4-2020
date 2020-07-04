@@ -1,0 +1,26 @@
+{
+  "name": "codering-event-7-4-2020",
+  "version": "1.0.0",
+  "description": "- This event requires users to collaborate with each other and build an API using Node.JS, Express, and MongoDB.\r - The goal is to build a working CRUD application that meets all requirements listed below.\r - The top contributor will win a $25 Amazon Gift Card",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ansonfoong/codering-event-7-4-2020.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ansonfoong/codering-event-7-4-2020/issues"
+  },
+  "homepage": "https://github.com/ansonfoong/codering-event-7-4-2020#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.21"
+  }
+}
