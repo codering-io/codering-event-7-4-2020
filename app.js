@@ -17,10 +17,9 @@ mongoose.connect("mongodb://localhost:27017/coderingevent1", {
   useUnifiedTopology: true,
 });
 
-
 app.get("/friends/:username", async (req, res) => {
   const { username } = req.params;
-  const user = await User.find({ username: username });
+  const user = await User.findOne({ username: username });
   res.send({ count: user.friends.length, friends: user.friends });
 });
 
