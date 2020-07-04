@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
   res.send(200);
 });
 
-app.get("/users/:username", async (req, res) => {
+app.get(["/users", "/users/:username"], async (req, res) => {
   let { username } = req.params;
 
   if (username) {
