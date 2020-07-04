@@ -31,6 +31,18 @@ app.get(["/users", "/users/:username"], async (req, res) => {
   res.send({ count: users.length, users: users });
 });
 
+app.put('/users/:usernameOrEmail/username', async (req, res) => {
+  const { username } = req.body;
+  if (!username) return res.send({ error: 400, message: "No username was inputted." });
+
+  const user = await User.findOne({ username: req.params.usernameOrEmail }) || await User.findOne({ email: req.params.usernameOrEmail });
+
+  if (await User.findOne({ username: username })) return res.send({ error: 400, message: "Sorry but someone already has that name." });
+  await user.updateOne({ username: username });
+
+  res.send({ newName: username });
+});
+
 app.post("/users", async (req, res) => {
   const { username, password, email } = req.body;
   if (!username || !password || !email) return res.send({ error: 400, message: "Sorry. But it seems you are missing a piece of information." });
