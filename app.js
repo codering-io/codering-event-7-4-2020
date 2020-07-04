@@ -53,8 +53,8 @@ app.post("/users", async (req, res) => {
   res.send(user);
 });
 
-app.delete("/users/:user", async (req, res) => {
-  const findUser = await findNameOrEmail(req.params.user);
+app.delete("/users/:usernameOrEmail", async (req, res) => {
+  const findUser = await findNameOrEmail(req.params.usernameOrEmail);
   if (!findUser) return res.status(400).send("No user found!");
   res.send(await findUser.deleteOne());
 });
