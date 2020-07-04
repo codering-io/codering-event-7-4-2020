@@ -88,15 +88,15 @@ This route is for all users that are signed up with the application, every user 
 }
 ```
  
-- [ ] **4 - PUT /users/:usernameOrEmail/username**
+- [X] **4 - PUT /users/:usernameOrEmail/username**
 
 - Updates a user's username. Must check if the username is already used in the database. Request body contains the username parameter to update.
 
-- [ ] **5 - PUT /users/:usernameOrEmail/email**
+- [X] **5 - PUT /users/:usernameOrEmail/email**
 
 - Updates a user's email address. Must check if email is already used by another user. Request body contains the email parameter to update.
 
-- [ ] **6 - DELETE /users/:usernameOrEmail**
+- [X] **6 - DELETE /users/:usernameOrEmail**
 
 - Deletes a user by username or email from the database
 
@@ -106,11 +106,11 @@ This route is for all users that are signed up with the application, every user 
 
  - Get all posts from the database
 
-- [ ] **8 - GET /posts/:usernameOrEmail**
+- [X] **8 - GET /posts/:usernameOrEmail**
 
 - Get all posts by username or email
 
-- [ ] **9 - POST /posts**
+- [X] **9 - POST /posts**
 
 - Creates a new post for a user, the request body must have the following
 
@@ -127,7 +127,7 @@ This route is for all users that are signed up with the application, every user 
 
 Both username and email must be found in the database and MUST correspond to the same exact user.
 
-- [ ] **10 - PUT /posts/:id**
+- [X] **10 - PUT /posts/:id**
 
 **id** - The MongoDB object id associated with this post
 
@@ -138,18 +138,18 @@ Both username and email must be found in the database and MUST correspond to the
 }
 ```
 
-- [ ] **11 - DELETE /posts/:id**
+- [X] **11 - DELETE /posts/:id**
 
 **id** - The mongoDB object id associated with this post
 
 
 **Route: /friends**
 
-- [ ] **12 - GET /friends/:username**
+- [X] **12 - GET /friends/:username**
 
 - Returns all of the friends associated with the user
 
-- [ ] **13 - POST /friends/:username**
+- [X] **13 - POST /friends/:username**
 
 **username** - The user to add the friend to
 
