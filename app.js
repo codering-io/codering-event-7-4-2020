@@ -14,10 +14,18 @@ app.get("/", (req, res) => {
 	res.send(200);
 });
 
-app.get("/users", async (req, res) => {
+app.get(["/users", "/users/:username"], async (req, res) => {
+	const { username } = req.params;
+
+	if (username) {
+		const user = await User.findOne({ username: username });
+
+		return res.send(user === null ? { error: `No user with the name: ${username} can be found.` } : user);
+	}
+
 	const users = await User.find({});
 
-	res.send({ count: users.length, users: users });
+	return res.send({ count: users.length, users: users });
 });
 
 app.listen(PORT, () => console.log(`Server is listening to requests on Port ${PORT}`));
