@@ -2,7 +2,7 @@
 
 # Saturday, July 4th 9 AM EST - Friday, July 10th 6 PM EST
 
-## Express.JS API
+# Express.JS API
 
 - This event requires users to collaborate with each other and build an API using Node.JS, Express, and MongoDB.
 - The goal is to build a working CRUD application that meets all requirements listed below.
@@ -19,6 +19,8 @@
 - Run `npm i`
 
 - Run `npm run start` to start the app, or if you have nodemon, `npm run dev`. This will start up the express app on Port 3001.
+
+- Please make sure you have Node.JS Installed, as well as MongoDB running on Port 27017.
 
 
 # How to contribute
