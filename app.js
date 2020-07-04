@@ -49,8 +49,8 @@ app.get("/posts", async (req, res) => {
 
 app.get("/friends/:username", async (req, res) => {
   const { username } = req.params;
-  const user = await User.find({ username: username });
-  res.send(user);
+  const friends = await User.find({ username: username });
+  res.send({ count: friends.length, users: friends });
 });
 
 app.listen(PORT, () => console.log(`Server is listening to requests on Port ${PORT}`));
