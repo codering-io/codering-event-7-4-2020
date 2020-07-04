@@ -1,86 +1,25 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/User");
-const Post = require("./models/Post");
-const usersRouter = require("./routes/users");
-const findNameOrEmail = require("./util/findNameOrEmail");
+const usersRouter = require("./routes/users")
+const postsRouter = require("./routes/posts")
+const friendsRouter = require("./routes/friends")
 
 const app = express();
 const PORT = 3001;
 
-app.use(express.json());
-app.use("/users", usersRouter);
+app.use(express.json())
+app.use("/users", usersRouter)
+app.use("/posts", postsRouter)
+app.use("/friends", friendsRouter)
+
 
 mongoose.connect("mongodb://localhost:27017/coderingevent1", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-app.get("/posts", async (req, res) => {
-  let posts = await Post.find({});
 
-  res.send({ count: posts.length, posts: posts });
-});
-
-app.get("/posts/:usernameOrEmail", async (req, res) => {
-  let { usernameOrEmail } = req.params;
-  let user = await findNameOrEmail(usernameOrEmail);
-  if (!user || user === null) return res.send({ error: 400, message: "Sorry but this user doesn't exist in our database" });
-  let posts = await Post.find({ author: user.username });
-  return res.send(posts);
-});
-
-app.post("/posts", async (req, res) => {
-  const {
-    username,
-    email,
-    post: { title, content },
-  } = req.body;
-  if (!username || !email || !title || !content) return res.send({ error: 400, message: "Sorry. But it seems you are missing a piece of information." });
-
-  let user = await findNameOrEmail(username);
-  if (user === null) return res.send({ error: 400, message: "Sorry but this user doesn't exist in our database" });
-  if (user.email !== email) return res.send({ error: 401, message: "Sorry but the email does not correspond to the user." });
-
-  const post = new Post({ title: title, content: content, author: username, createdOn: new Date(), editedOn: null });
-  await post.save();
-
-  res.send(post);
-});
-
-app.get("/friends/:username", async (req, res) => {
-  const { username } = req.params;
-  const user = await User.findOne({ username: username });
-  res.send({ count: user.friends.length, friends: user.friends });
-});
-
-app.post("/friends/:username", async (req, res) => {
-  const { username } = req.body;
-  if (!username) return res.send({ error: 404, message: "You need a friend username." });
-  if (!req.params.username) return res.send({ error: 404, message: "You need a username." });
-  const foundUser = await User.findOne({ username: req.params.username });
-  if (!foundUser) return res.send({ error: 404, message: "User does not exist." });
-  foundUser.friends.push(username);
-  await foundUser.save();
-  res.send(foundUser);
-});
-
-app.delete("/friends/:username", async (req, res) => {
-  const { username } = req.body;
-  if (!username) return res.send({ error: 404, message: "You need a friend username." });
-  if (!req.params.username) return res.send({ error: 404, message: "You need a username." });
-  const foundUser = await User.findOne({ username: req.params.username });
-  if (!foundUser) return res.send({ error: 404, message: "User does not exist." });
-  if (!foundUser.friends.includes(username)) return res.send({ error: 404, message: `${username} is not ${req.params.username}'s friend.` });
-
-  const index = foundUser.friends.indexOf(username);
-  if (index > -1) {
-    foundUser.friends.splice(index, 1);
-  }
-  res.send(await foundUser.save());
-});
 
 app.listen(PORT, () => {
   console.log(`Server is listening to requests on Port ${PORT}`);
 });
-
-// Find a user by email or username
