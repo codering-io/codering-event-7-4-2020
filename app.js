@@ -4,7 +4,6 @@ const User = require("./models/User");
 const Post = require("./models/Post");
 const usersRouter = require("./routes/users")
 const postsRouter = require("./routes/posts")
-const { findByIdAndUpdate } = require("./models/User");
 
 const app = express();
 const PORT = 3001;
