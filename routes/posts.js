@@ -26,33 +26,39 @@ router.route("/").post( async (req, res) => {
   if (user.email !== email) return res.send({ error: 401, message: "Sorry but the email does not correspond to the user." });
 
   const post = new Post({ title: title, content: content, author: username, createdOn: new Date(), editedOn: null });
-  await post.save();
+  const newPost = await post.save();
 
-  res.send(post);
+  res.send(newPost);
 })
 
 router.route("/:id").put( async (req, res) => {
   const { id } = req.params;
-  if (!id) return res.sendStatus(400).send({ error: 400, message: "No id was provided."})
+  if (!id) return res.send({ error: 400, message: "No id was provided."})
   const { title, content } = req.body;
-  let user;
   if (title && !content) {
-    user = await Post.findById(id);
-    user.updateOne({ title })
+    const post = await Post.findById(id);
+    await post.updateOne({ title: title })
     return res.send({ newTitle: title })
   }
   if (!title && content) {
-    user = await Post.findById(id);
-    user.updateOne({ content })
+    const post = await Post.findById(id);
+    await post.updateOne({ content: content })
     return res.send({ newContent: content })
   }
   if (title && content) {
-    user = await Post.findById(id);
-    user.updateOne({ title: title, content: content })
+    const post = await Post.findById(id);
+    await post.updateOne({ title: title, content: content })
     return res.send({ newTitle: title, newContent: content})
   }
   
   return res.send({ error: 400, message: "You need to supply either a title or content, or both." })
+})
+
+router.route("/:id").delete( async (req, res) => {
+  const { id } = req.params;
+  if (!id) return res.send({ error: 400, message: "No id was provided."})
+  const post = await Post.findById(id);
+  return post === null || !post ? res.send({ error: 400, message: "Not a valid ID"}) : post.deleteOne().then(res.send({ message: "Successfully deleted post."}))
 })
 
 module.exports = router
