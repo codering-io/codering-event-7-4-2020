@@ -6,6 +6,8 @@ const Post = require("./models/Post");
 const app = express();
 const PORT = 3001;
 
+app.use(express.json());
+
 mongoose.connect("mongodb://localhost:27017/coderingevent1", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
