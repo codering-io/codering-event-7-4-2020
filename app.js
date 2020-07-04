@@ -37,7 +37,7 @@ app.put("/users/:usernameOrEmail/username", async (req, res) => {
 
   if (!username) return res.send({ error: 400, message: "No username was inputted." });
 
-  const user = await findNameOrEmail(usernameOrEmail)
+  const user = await findNameOrEmail(usernameOrEmail);
 
   if (await User.findOne({ username: username })) return res.send({ error: 400, message: "Sorry but someone already has that name." });
   await user.updateOne({ username: username });
@@ -94,14 +94,18 @@ app.get("/posts", async (req, res) => {
 
 app.get("/posts/:usernameOrEmail", async (req, res) => {
   let { usernameOrEmail } = req.params;
-  let user = await findNameOrEmail(usernameOrEmail)
+  let user = await findNameOrEmail(usernameOrEmail);
   if (!user || user === null) return res.send({ error: 400, message: "Sorry but this user doesn't exist in our database" });
   let posts = await Post.find({ author: user.username });
   return res.send(posts);
 });
 
 app.post("/posts", async (req, res) => {
-  const { username, email, post: { title, content } } = req.body;
+  const {
+    username,
+    email,
+    post: { title, content },
+  } = req.body;
   if (!username || !email || !title || !content) return res.send({ error: 400, message: "Sorry. But it seems you are missing a piece of information." });
 
   let user = await findNameOrEmail(username);
@@ -112,12 +116,12 @@ app.post("/posts", async (req, res) => {
   await post.save();
 
   res.send(post);
-})
+});
 
 app.get("/friends/:username", async (req, res) => {
   const { username } = req.params;
   const user = await User.find({ username: username });
-  res.send({ count: user.friends.length, friends: user.friends });
+  res.send({ count: user[0].friends.length, friends: user[0].friends });
 });
 
 app.listen(PORT, () => {
