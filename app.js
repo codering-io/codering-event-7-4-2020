@@ -25,7 +25,7 @@ app.get("/users", async (req, res) => {
 app.get("/users/:username", async (req, res) => {
   const { username } = req.params;
   const user = await User.findOne({ username }).select("-password");
-  if (!user) return res.status(404).send("No user found!");
+  if (!user) return res.status(400).send("No user found!");
   res.send(user);
 });
 
@@ -42,7 +42,7 @@ app.post("/users", async (req, res) => {
 
 app.put("/users/:user/username", async (req, res) => {
   const findUser = await findNameOrEmail(req.params.user);
-  if (!findUser) return res.status(404).send("No user found!");
+  if (!findUser) return res.status(400).send("No user found!");
 
   const { username } = req.body;
   if (!username) return res.status(404).send("Please provide a username!");
@@ -56,7 +56,7 @@ app.put("/users/:user/username", async (req, res) => {
 
 app.put("/users/:user/email", async (req, res) => {
   const findUser = await findNameOrEmail(req.params.user);
-  if (!findUser) return res.status(404).send("No user found!");
+  if (!findUser) return res.status(400).send("No user found!");
 
   const { email } = req.body;
   if (!email) return res.status(404).send("Please provide a email!");
@@ -70,7 +70,7 @@ app.put("/users/:user/email", async (req, res) => {
 
 app.delete("/users/:user", async (req, res) => {
   const findUser = await findNameOrEmail(req.params.user);
-  if (!findUser) return res.status(404).send("No user found!");
+  if (!findUser) return res.status(400).send("No user found!");
   res.send(await findUser.deleteOne());
 });
 
