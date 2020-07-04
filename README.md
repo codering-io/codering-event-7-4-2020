@@ -149,7 +149,7 @@ Both username and email must be found in the database and MUST correspond to the
 
 - Returns all of the friends associated with the user
 
-- [ ] **13 - POST /friends/:username**
+- [X] **13 - POST /friends/:username**
 
 **username** - The user to add the friend to
 
