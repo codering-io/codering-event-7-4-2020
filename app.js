@@ -43,6 +43,20 @@ app.put('/users/:usernameOrEmail/username', async (req, res) => {
   res.send({ newName: username });
 });
 
+app.put("/users/:user/email", async (req, res) => {
+  const findUser = await findNameOrEmail(req.params.user);
+  if (!findUser) return res.status(400).send("No user found!");
+
+  const { email } = req.body;
+  if (!email) return res.status(404).send("Please provide a email!");
+
+  const checkEmail = await User.findOne({ email });
+  if (checkEmail) return res.send("You cannot use this email!");
+
+  await findUser.updateOne({ email });
+  res.sendStatus(200);
+});
+
 app.post("/users", async (req, res) => {
   const { username, password, email } = req.body;
   if (!username || !password || !email) return res.send({ error: 400, message: "Sorry. But it seems you are missing a piece of information." });
