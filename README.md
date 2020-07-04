@@ -45,7 +45,7 @@ You must fork this repository, and then clone it and then make changes on your o
 
 Database Models:
 
-~~**1 - Create a Database Model for Users**~~
+- [x] **1 - Create a Database Model for Users**
 
 ```
 {
@@ -55,7 +55,7 @@ Database Models:
 }
 ```
 
-~~**2 - Create a Database Model for Posts**~~
+- [x] **2 - Create a Database Model for Posts**
 ```
 {
   title: string
@@ -68,15 +68,15 @@ Database Models:
 
 This route is for all users that are signed up with the application, every user must be unique.
 
-~~**1 - GET /users**~~
+- [x] **1 - GET /users**
 
 - Returns all of the users in the database
 
-~~**2 - GET /users/:username**~~
+- [x] **2 - GET /users/:username**
 
 - Returns the user based on their username
 
-~~**3 - POST /users**~~
+- [x] **3 - POST /users**
 
 - Creates a new user with the following parameters in the request body
 
@@ -102,7 +102,7 @@ This route is for all users that are signed up with the application, every user 
 
 **Route: /posts**
 
-~~**7 - GET /posts**~~
+- [x] **7 - GET /posts**
 
  - Get all posts from the database
 
