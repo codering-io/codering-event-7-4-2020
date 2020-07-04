@@ -9,10 +9,12 @@ router.route("/:username").get(async (req, res) => {
 
 router.route("/:username").post(async (req, res) => {
   const { username } = req.body;
-  if (!username) return res.send({ error: 404, message: "You need a friend username." });
-  if (!req.params.username) return res.send({ error: 404, message: "You need a username." });
+  if (!username) return res.send({ error: 400, message: "You need a friend username." });
+  if (!req.params.username) return res.send({ error: 400, message: "You need a username." });
   const foundUser = await User.findOne({ username: req.params.username });
-  if (!foundUser) return res.send({ error: 404, message: "User does not exist." });
+  if (!(await User.findOne({ username: username }))) return res.send({ error: 400, message: "Friend name does not exist."})
+  if (!foundUser) return res.send({ error: 400, message: "User does not exist." });
+  if (foundUser.friends.includes(username)) return res.send({ error: 400, message: "User is already a friend!"})
   foundUser.friends.push(username);
   
   res.send(await foundUser.save());
@@ -20,11 +22,11 @@ router.route("/:username").post(async (req, res) => {
 
 router.route("/:username").delete(async (req, res) => {
   const { username } = req.body;
-  if (!username) return res.send({ error: 404, message: "You need a friend username." });
-  if (!req.params.username) return res.send({ error: 404, message: "You need a username." });
+  if (!username) return res.send({ error: 400, message: "You need a friend username." });
+  if (!req.params.username) return res.send({ error: 400, message: "You need a username." });
   const foundUser = await User.findOne({ username: req.params.username });
-  if (!foundUser) return res.send({ error: 404, message: "User does not exist." });
-  if (!foundUser.friends.includes(username)) return res.send({ error: 404, message: `${username} is not ${req.params.username}'s friend.` });
+  if (!foundUser) return res.send({ error: 400, message: "User does not exist." });
+  if (!foundUser.friends.includes(username)) return res.send({ error: 400, message: `${username} is not ${req.params.username}'s friend.` });
 
   const index = foundUser.friends.indexOf(username);
   if (index > -1) {
