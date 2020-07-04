@@ -45,7 +45,7 @@ You must fork this repository, and then clone it and then make changes on your o
 
 Database Models:
 
-~~**1 - Create a Database Model for Users**~~
+- [x] **1 - Create a Database Model for Users**
 
 ```
 {
@@ -55,7 +55,7 @@ Database Models:
 }
 ```
 
-~~**2 - Create a Database Model for Posts**~~
+- [x] **2 - Create a Database Model for Posts**
 ```
 {
   title: string
@@ -68,15 +68,15 @@ Database Models:
 
 This route is for all users that are signed up with the application, every user must be unique.
 
-~~**1 - GET /users**~~
+- [x] **1 - GET /users**
 
 - Returns all of the users in the database
 
-~~**2 - GET /users/:username**~~
+- [x] **2 - GET /users/:username**
 
 - Returns the user based on their username
 
-~~**3 - POST /users**~~
+- [x] **3 - POST /users**
 
 - Creates a new user with the following parameters in the request body
 
@@ -87,30 +87,30 @@ This route is for all users that are signed up with the application, every user 
   email: 'stuy@gmail.com'
 }
 ```
-
-**4 - PUT /users/:usernameOrEmail/username**
+ 
+- [ ] **4 - PUT /users/:usernameOrEmail/username**
 
 - Updates a user's username. Must check if the username is already used in the database. Request body contains the username parameter to update.
 
-**5 - PUT /users/:usernameOrEmail/email**
+- [ ] **5 - PUT /users/:usernameOrEmail/email**
 
 - Updates a user's email address. Must check if email is already used by another user. Request body contains the email parameter to update.
 
-**6 - DELETE /users/:usernameOrEmail**
+- [ ] **6 - DELETE /users/:usernameOrEmail**
 
 - Deletes a user by username or email from the database
 
 **Route: /posts**
 
-~~**7 - GET /posts**~~
+- [x] **7 - GET /posts**
 
  - Get all posts from the database
 
-**8 - GET /posts/:usernameOrEmail**
+- [ ] **8 - GET /posts/:usernameOrEmail**
 
 - Get all posts by username or email
 
-**9 - POST /posts**
+- [ ] **9 - POST /posts**
 
 - Creates a new post for a user, the request body must have the following
 
@@ -127,7 +127,7 @@ This route is for all users that are signed up with the application, every user 
 
 Both username and email must be found in the database and MUST correspond to the same exact user.
 
-**10 - PUT /posts/:id**
+- [ ] **10 - PUT /posts/:id**
 
 **id** - The MongoDB object id associated with this post
 
@@ -138,18 +138,18 @@ Both username and email must be found in the database and MUST correspond to the
 }
 ```
 
-**11 - DELETE /posts/:id**
+- [ ] **11 - DELETE /posts/:id**
 
 **id** - The mongoDB object id associated with this post
 
 
 **Route: /friends**
 
-**12 - GET /friends/:username**
+- [ ] **12 - GET /friends/:username**
 
 - Returns all of the friends associated with the user
 
-**13 - POST /friends/:username**
+- [ ] **13 - POST /friends/:username**
 
 **username** - The user to add the friend to
 
@@ -163,7 +163,7 @@ RequestBody {
 
 This request will add "john" as a friend to "anson". Note: this relationship is not mutual, as "anson" added "john" but "john" did not add "anson".
 
-**14 - DELETE /friends/:username**
+- [ ] **14 - DELETE /friends/:username**
 
 - Deletes a friend. It takes a request body similar to POST /friends/:username.
 e.g: DELETE /friends/anson
