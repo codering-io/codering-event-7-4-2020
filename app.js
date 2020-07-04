@@ -10,7 +10,7 @@ const PORT = 3001;
 app.use(express.json())
 app.use("/users", usersRouter)
 
-mongoose.connect("mongodb+srv://admin:hexmadrocks50@testinggrounds.j92jh.mongodb.net/coderingevent1", {
+mongoose.connect("mongodb://localhost:27017/coderingevent1", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
