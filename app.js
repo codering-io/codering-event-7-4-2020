@@ -28,6 +28,20 @@ app.get("/posts/:usernameOrEmail", async (req, res) => {
   return res.send(posts);
 });
 
+app.post("/posts", async (req, res) => {
+  const { username, email, post: { title, content } } = req.body;
+  if (!username || !email || !title || !content) return res.send({ error: 400, message: "Sorry. But it seems you are missing a piece of information." });
+
+  let user = await findNameOrEmail(username);
+  if (user === null) return res.send({ error: 400, message: "Sorry but this user doesn't exist in our database" });
+  if (user.email !== email) return res.send({ error: 401, message: "Sorry but the email does not correspond to the user." });
+
+  const post = new Post({ title: title, content: content, author: username, createdOn: new Date(), editedOn: null });
+  await post.save();
+
+  res.send(post);
+})
+
 app.get("/friends/:username", async (req, res) => {
   const { username } = req.params;
   const user = await User.find({ username: username });
