@@ -2,13 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/User");
 const Post = require("./models/Post");
-const usersRouter = require("./routes/users")
+const usersRouter = require("./routes/users");
+const findNameOrEmail = require("./util/findNameOrEmail");
 
 const app = express();
 const PORT = 3001;
 
-app.use(express.json())
-app.use("/users", usersRouter)
+app.use(express.json());
+app.use("/users", usersRouter);
 
 mongoose.connect("mongodb://localhost:27017/coderingevent1", {
   useNewUrlParser: true,
@@ -22,14 +23,18 @@ app.get("/posts", async (req, res) => {
 
 app.get("/posts/:usernameOrEmail", async (req, res) => {
   let { usernameOrEmail } = req.params;
-  let user = await findNameOrEmail(usernameOrEmail)
+  let user = await findNameOrEmail(usernameOrEmail);
   if (!user || user === null) return res.send({ error: 400, message: "Sorry but this user doesn't exist in our database" });
   let posts = await Post.find({ author: user.username });
   return res.send(posts);
 });
 
 app.post("/posts", async (req, res) => {
-  const { username, email, post: { title, content } } = req.body;
+  const {
+    username,
+    email,
+    post: { title, content },
+  } = req.body;
   if (!username || !email || !title || !content) return res.send({ error: 400, message: "Sorry. But it seems you are missing a piece of information." });
 
   let user = await findNameOrEmail(username);
@@ -40,11 +45,11 @@ app.post("/posts", async (req, res) => {
   await post.save();
 
   res.send(post);
-})
+});
 
 app.get("/friends/:username", async (req, res) => {
   const { username } = req.params;
-  const user = await User.find({ username: username });
+  const user = await User.findOne({ username: username });
   res.send({ count: user.friends.length, friends: user.friends });
 });
 
@@ -64,4 +69,3 @@ app.listen(PORT, () => {
 });
 
 // Find a user by email or username
-
