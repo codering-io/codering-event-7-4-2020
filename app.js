@@ -73,7 +73,9 @@ app.post("/friends/:username", async (req, res) => {
   if (!req.params.username) return res.send({ error: 404, message: "You need a username." });
   const foundUser = await User.findOne({ username: req.params.username });
   if (!foundUser) return res.send({ error: 404, message: "User does not exist." });
-  await foundUser.updateOne({ friends: username });
+  foundUser.friends.push(username);
+  await foundUser.save();
+  res.send(foundUser);
 });
 
 app.delete("/users/:usernameOrEmail", async (req, res) => {
