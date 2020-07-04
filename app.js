@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.send(200);
 });
 
-app.get("/users/", async (req, res) => {
+app.get("/users", async (req, res) => {
     let users = await User.find({});
 
     res.send({ count: users.length, users: users });
