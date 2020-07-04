@@ -28,4 +28,16 @@ app.get(["/users", "/users/:username"], async (req, res) => {
   res.send({ count: users.length, users: users });
 });
 
+app.post('/users', async(req, res) => {
+    const newUser = new User({
+      username: 'stuy',
+      password: 123456,
+      email: 'stuy@gmail.com',
+    });
+    newUser.save().then(e => {
+      return res.send(`Error: ${e}`);
+    });
+    return res.send('Success: Created new user.');
+});
+
 app.listen(PORT, () => console.log(`Server is listening to requests on Port ${PORT}`));
