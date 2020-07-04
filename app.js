@@ -5,6 +5,8 @@ const User = require("./models/User");
 const app = express();
 const PORT = 3001;
 
+app.use(express.json())
+
 mongoose.connect('mongodb://localhost:27017/coderingevent1', {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -27,5 +29,15 @@ app.get(["/users", "/users/:username"], async (req, res) => {
 
   res.send({ count: users.length, users: users });
 });
+
+app.post("/users", async (req, res) => {
+  const { username, password, email } = req.body;
+  if (!username || !password || !email) return res.send({ error: 400, message: "Sorry. But it seems you are missing a piece of information." });
+
+  const user = new User({ username: username, password: password, email: email });
+  await user.save();
+
+  res.send(user);
+})
 
 app.listen(PORT, () => console.log(`Server is listening to requests on Port ${PORT}`));
