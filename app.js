@@ -47,4 +47,18 @@ app.get("/posts", async (req, res) => {
   res.send({ count: posts.length, posts: posts });
 });
 
+app.delete("/users/:usernameOrEmail", async (req, res) => {
+  const { usernameOrEmail } = req.params;
+
+  if (usernameOrEmail) {
+    const user = await User.findOneAndDelete({ username: usernameOrEmail })
+    if (user === null) {
+      const email = await User.findOneAndDelete({ email: usernameOrEmail})
+      return res.send(email === null ? { error: `No user with the email: ${usernameOrEmail} can be found.` } : email)
+    }
+    return res.send(user)
+  }
+
+})
+
 app.listen(PORT, () => console.log(`Server is listening to requests on Port ${PORT}`));
