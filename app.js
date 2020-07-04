@@ -14,12 +14,10 @@ app.get('/', (req, res) => {
   res.send(200);
 });
 
-app.get("/users", (req, res) => {
-  User.find({}, (error, results) => {
-    if (error) res.send({ message: "An error occured", error: error.stack });
+app.get("/users", async (req, res) => {
+  let users = await User.find({});
 
-    res.send(results);
-  });
+  res.send({ count: users.length, users: users });
 });
 
 app.listen(PORT, () => console.log(`Server is listening to requests on Port ${PORT}`));
