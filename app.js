@@ -3,44 +3,22 @@ const mongoose = require("mongoose");
 const User = require("./models/User");
 const Post = require("./models/Post");
 const usersRouter = require("./routes/users")
+const postsRouter = require("./routes/posts")
+const { findByIdAndUpdate } = require("./models/User");
 
 const app = express();
 const PORT = 3001;
 
 app.use(express.json())
 app.use("/users", usersRouter)
+app.use("/posts", posts)
+
 
 mongoose.connect("mongodb://localhost:27017/coderingevent1", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-app.get("/posts", async (req, res) => {
-  let posts = await Post.find({});
 
-  res.send({ count: posts.length, posts: posts });
-});
-
-app.get("/posts/:usernameOrEmail", async (req, res) => {
-  let { usernameOrEmail } = req.params;
-  let user = await findNameOrEmail(usernameOrEmail)
-  if (!user || user === null) return res.send({ error: 400, message: "Sorry but this user doesn't exist in our database" });
-  let posts = await Post.find({ author: user.username });
-  return res.send(posts);
-});
-
-app.post("/posts", async (req, res) => {
-  const { username, email, post: { title, content } } = req.body;
-  if (!username || !email || !title || !content) return res.send({ error: 400, message: "Sorry. But it seems you are missing a piece of information." });
-
-  let user = await findNameOrEmail(username);
-  if (user === null) return res.send({ error: 400, message: "Sorry but this user doesn't exist in our database" });
-  if (user.email !== email) return res.send({ error: 401, message: "Sorry but the email does not correspond to the user." });
-
-  const post = new Post({ title: title, content: content, author: username, createdOn: new Date(), editedOn: null });
-  await post.save();
-
-  res.send(post);
-})
 
 app.get("/friends/:username", async (req, res) => {
   const { username } = req.params;
@@ -62,6 +40,3 @@ app.post("/friends/:username", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is listening to requests on Port ${PORT}`);
 });
-
-// Find a user by email or username
-
