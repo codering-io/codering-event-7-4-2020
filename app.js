@@ -22,7 +22,7 @@ app.get("/users", async (req, res) => {
 });
 
 app.get("/posts", async (req, res) => {
-  let Posts = await Post.find({});
+  let posts = await Post.find({});
 
   res.send({ count: posts.length, posts: posts });
 });
