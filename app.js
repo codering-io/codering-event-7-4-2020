@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const User = require("./models/User");
 const usersRouter = require("./routes/users")
 const postsRouter = require("./routes/posts")
 const friendsRouter = require("./routes/friends")
