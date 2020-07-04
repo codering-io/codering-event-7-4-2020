@@ -53,10 +53,28 @@ app.post("/users", async (req, res) => {
   res.send(user);
 });
 
+app.delete("/users/:user", async (req, res) => {
+  const findUser = await findNameOrEmail(req.params.user);
+  if (!findUser) return res.status(400).send("No user found!");
+  res.send(await findUser.deleteOne());
+});
+
 app.get("/posts", async (req, res) => {
   let posts = await Post.find({});
 
   res.send({ count: posts.length, posts: posts });
 });
 
-app.listen(PORT, () => console.log(`Server is listening to requests on Port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server is listening to requests on Port ${PORT}`)
+});
+
+// Find a user by email or username
+async function findNameOrEmail(value) {
+  const findName = await User.findOne({ username: value });
+  if (findName) return findName;
+  const findEmail = await User.findOne({ email: value });
+  if (findEmail) return findEmail;
+  return null;
+}
+
