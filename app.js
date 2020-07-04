@@ -49,8 +49,8 @@ app.post("/posts", async (req, res) => {
 
 app.get("/friends/:username", async (req, res) => {
   const { username } = req.params;
-  const user = await User.find({ username: username });
-  res.send({ count: user[0].friends.length, friends: user[0].friends });
+  const user = await User.findOne({ username: username });
+  res.send({ count: user.friends.length, friends: user.friends });
 });
 
 app.post("/friends/:username", async (req, res) => {
