@@ -48,6 +48,17 @@ app.get("/friends/:username", async (req, res) => {
   res.send({ count: user.friends.length, friends: user.friends });
 });
 
+app.post("/friends/:username", async (req, res) => {
+  const { username } = req.body;
+  if (!username) return res.send({ error: 404, message: "You need a friend username." });
+  if (!req.params.username) return res.send({ error: 404, message: "You need a username." });
+  const foundUser = await User.findOne({ username: req.params.username });
+  if (!foundUser) return res.send({ error: 404, message: "User does not exist." });
+  foundUser.friends.push(username);
+  await foundUser.save();
+  res.send(foundUser);
+});
+
 app.listen(PORT, () => {
   console.log(`Server is listening to requests on Port ${PORT}`);
 });
