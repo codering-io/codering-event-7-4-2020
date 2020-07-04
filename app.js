@@ -43,8 +43,8 @@ app.put('/users/:usernameOrEmail/username', async (req, res) => {
   res.send({ newName: username });
 });
 
-app.put("/users/:user/email", async (req, res) => {
-  const findUser = await findNameOrEmail(req.params.user);
+app.put("/users/:usernameOrEmail/email", async (req, res) => {
+  const findUser = await findNameOrEmail(req.params.usernameOrEmail);
   if (!findUser) return res.status(400).send("No user found!");
 
   const { email } = req.body;
