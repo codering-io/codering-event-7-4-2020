@@ -33,9 +33,11 @@ app.get(["/users", "/users/:username"], async (req, res) => {
 
 app.put("/users/:usernameOrEmail/username", async (req, res) => {
   const { username } = req.body;
+  const { usernameOrEmail } = req.params;
+
   if (!username) return res.send({ error: 400, message: "No username was inputted." });
 
-  const user = (await User.findOne({ username: req.params.usernameOrEmail })) || (await User.findOne({ email: req.params.usernameOrEmail }));
+  const user = await findNameOrEmail(usernameOrEmail)
 
   if (await User.findOne({ username: username })) return res.send({ error: 400, message: "Sorry but someone already has that name." });
   await user.updateOne({ username: username });
@@ -77,6 +79,14 @@ app.get("/posts", async (req, res) => {
   let posts = await Post.find({});
 
   res.send({ count: posts.length, posts: posts });
+});
+
+app.get("/posts/:usernameOrEmail", async (req, res) => {
+  let { usernameOrEmail } = req.params;
+  let user = await findNameOrEmail(usernameOrEmail)
+  if (!user || user === null) return res.send({ error: 400, message: "Sorry but this user doesn't exist in our database" });
+  let posts = await Post.find({ author: user.username });
+  return res.send(posts);
 });
 
 app.get("/friends/:username", async (req, res) => {
