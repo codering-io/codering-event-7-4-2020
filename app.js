@@ -37,4 +37,24 @@ app.post('/users', function(req, res) {
   return newUser.save().then(() => res.send(`Added user: ${req.body.username} into the database.`));
 });
 
+app.put('/users/:usernameOrEmail/:username', function(req, res) {
+  User.findOne({ username: req.params.usernameOrEmail }, async function(err, result) {
+    if (err) throw err;
+    if (result) {
+      await User.updateOne(result, { username: req.params.username })
+        .then(() => res.send(`Updated username to ${req.params.username}`));
+    }
+    if (!result) {
+      User.findOne({ email : req.params.usernameOrEmail }, async function(err, result) {
+        if (err) throw err;
+        if (!result) return res.send('Invalid User');
+        if (result) {
+          await User.updateOne(result, { username: req.params.username })
+            .then(() => res.send(`Updated username to ${req.params.username}`));
+        }
+      })
+    }
+  })
+});
+
 app.listen(PORT, () => console.log(`Server is listening to requests on Port ${PORT}`));
