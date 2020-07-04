@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./app.js",
-    "dev": "nodemon ./app.js"
+    "dev": "nodemon ./app.js",
+    "lint": "eslint models"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.9.21"
+  },
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-developer": "0.0.6"
   }
 }
