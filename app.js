@@ -14,7 +14,15 @@ app.get('/', (req, res) => {
   res.send(200);
 });
 
-app.get("/users", async (req, res) => {
+app.get(["/users", "/users/:username"], async (req, res) => {
+  let { username } = req.params;
+
+  if (username) {
+    let user = await User.findOne({ username: username });
+
+    return res.send(user === null ? { error: `No user with the name: ${username} can be found.` } : user);
+  };
+
   let users = await User.find({});
 
   res.send({ count: users.length, users: users });
