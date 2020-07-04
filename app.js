@@ -19,7 +19,7 @@ app.get("/users", async (req, res) => {
   res.send({ count: users.length, users: users });
 });
 
-app.get("/users/:username", async (req, res) => {
+app.get("/users/:username", function(req, res) => {
   User.findOne({ username: req.params.username }, async (err, result) => {
     if (err) throw err;
     if (!result) return res.send('User not found.')
