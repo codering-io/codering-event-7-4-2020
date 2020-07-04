@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const User = require("./models/User");
 const Post = require("./models/Post");
 const usersRouter = require("./routes/users");
+const findNameOrEmail = require("./util/findNameOrEmail");
 
 const app = express();
 const PORT = 3001;
