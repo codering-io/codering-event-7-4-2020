@@ -5,13 +5,13 @@ const User = require("./models/User");
 const app = express();
 const PORT = 3001;
 
-mongoose.connect('mongodb://localhost:27017/coderingevent1', {
+mongoose.connect("mongodb://localhost:27017/coderingevent1", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 app.use(express.json(), express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.send(200);
 });
 
@@ -55,6 +55,5 @@ app.put('/users/:usernameOrEmail/:username', function(req, res) {
       })
     }
   })
-});
 
 app.listen(PORT, () => console.log(`Server is listening to requests on Port ${PORT}`));
