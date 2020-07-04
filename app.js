@@ -20,16 +20,15 @@ app.get("/posts", async (req, res) => {
   res.send({ count: posts.length, posts: posts });
 });
 
+app.get("/friends/:username", async (req, res) => {
+  const { username } = req.params;
+  const user = await User.find({ username: username });
+  res.send({ count: user.friends.length, friends: user.friends });
+});
+
 app.listen(PORT, () => {
-  console.log(`Server is listening to requests on Port ${PORT}`)
+  console.log(`Server is listening to requests on Port ${PORT}`);
 });
 
 // Find a user by email or username
-async function findNameOrEmail(value) {
-  const findName = await User.findOne({ username: value });
-  if (findName) return findName;
-  const findEmail = await User.findOne({ email: value });
-  if (findEmail) return findEmail;
-  return null;
-}
 
