@@ -64,7 +64,7 @@ app.post("/friends/:username", async (req, res) => {
   res.send(foundUser);
 });
 
-app.delete("friends/:username", async (req, res) => {
+app.delete("/friends/:username", async (req, res) => {
   const { username } = req.body;
   if (!username) return res.send({ error: 404, message: "You need a friend username." });
   if (!req.params.username) return res.send({ error: 404, message: "You need a username." });
