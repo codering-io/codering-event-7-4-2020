@@ -69,6 +69,17 @@ app.post("/users", async (req, res) => {
   res.send(user);
 });
 
+app.post("/friends/:username", async (req, res) => {
+  const { username } = req.body;
+  if (!username) return res.send({ error: 404, message: "You need a friend username." });
+  if (!req.params.username) return res.send({ error: 404, message: "You need a username." });
+  const foundUser = await User.findOne({ username: req.params.username });
+  if (!foundUser) return res.send({ error: 404, message: "User does not exist." });
+  foundUser.friends.push(username);
+  await foundUser.save();
+  res.send(foundUser);
+});
+
 app.delete("/users/:usernameOrEmail", async (req, res) => {
   const findUser = await findNameOrEmail(req.params.usernameOrEmail);
   if (!findUser) return res.status(400).send("No user found!");
