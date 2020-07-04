@@ -2,7 +2,6 @@ const router = require('express').Router();
 const User = require("../models/User")
 const Post = require("../models/Post")
 const findNameOrEmail = require("../util/findNameOrEmail")
-const { findByIdAndUpdate } = require("../models/Post");
 
 router.route("/").get( async (req, res) => {
   let posts = await Post.find({});

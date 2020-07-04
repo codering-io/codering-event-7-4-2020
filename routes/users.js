@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const User = require("../models/User")
-const Post = require("../models/Post")
 const findNameOrEmail = require("../util/findNameOrEmail")
 
 router.route(['/', '/:username']).get(async(req, res) => {

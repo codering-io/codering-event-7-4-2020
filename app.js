@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/User");
-const Post = require("./models/Post");
 const usersRouter = require("./routes/users")
 const postsRouter = require("./routes/posts")
 
@@ -10,7 +9,7 @@ const PORT = 3001;
 
 app.use(express.json())
 app.use("/users", usersRouter)
-app.use("/posts", posts)
+app.use("/posts", postsRouter)
 
 
 mongoose.connect("mongodb://localhost:27017/coderingevent1", {
