@@ -1,0 +1,6 @@
+{
+    "extends": "developer",
+    "rules": {
+        "quotes": ["error", "double"]
+    }
+}
