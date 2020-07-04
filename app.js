@@ -54,11 +54,13 @@ app.delete("/users/:usernameOrEmail", async (req, res) => {
     const user = await User.findOneAndDelete({ username: usernameOrEmail })
     if (user === null) {
       const email = await User.findOneAndDelete({ email: usernameOrEmail})
-      return res.send(email === null ? { error: 400, message: `No user with the email or username: ${usernameOrEmail} can be found.` } : email)
+      return res
+      .status(email === null ? 400 : 200)
+      .send(email === null ? { error: 400, message: `No user with the email or username: ${usernameOrEmail} can be found.` } : email)
     }
     return res.send(user)
   }
-  res.send(400)
+  res.status(400)
 
 })
 
