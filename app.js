@@ -29,6 +29,17 @@ app.get(["/users", "/users/:username"], async (req, res) => {
   res.send({ count: users.length, users: users });
 });
 
+app.post("/users", async (req, res) => {
+  const { username, password, email } = req.body;
+  if (!username || !password || !email) return res.send({ error: 400, message: "Sorry. But it seems you are missing a piece of information." });
+
+  const user = new User({ username: username, password: password, email: email });
+  await user.save();
+
+  res.send(user);
+});
+
+
 app.get("/posts", async (req, res) => {
   let posts = await Post.find({});
 
